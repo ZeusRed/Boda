@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import selloOro from "../assets/sello.png";
-import floresBoda from "../assets/flores1.png";
+import floresBoda from "../assets/flores2.png";
 import "./InvitacionBoda.css";
 import { InputText } from "primereact/inputtext";
 import { Dialog } from "primereact/dialog";
