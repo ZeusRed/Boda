@@ -132,7 +132,7 @@ const InvitacionBoda: React.FC = () => {
                 </div>
                 <div style={{ width: "50%", padding: "0 1px" }}>
                   <h3>
-                    Reynalda Vela <br /> Vicente Guillermo Sosa{" "}
+                    Reyna Vela Diaz<br /> Vicente Sosa Ortega{" "}
                   </h3>
                 </div>
               </div>
@@ -141,7 +141,7 @@ const InvitacionBoda: React.FC = () => {
               <p>a celebrar nuestra unión matrimonial civil</p>
               <div className="detalles" style={{ marginBottom: "2rem" }}>
                 <p>Sábado, 13 de Septiembre 2025</p>
-                <p>Hora: 3:30 P.M</p>
+                <p>Hora: 4:00 P.M</p>
                 <p>Dirección:</p>
                 <div className="flex align-items-center gap-2 mt-2 mb-4">
                   <i className="pi pi-map-marker text-primary"></i>
