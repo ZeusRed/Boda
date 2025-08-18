@@ -7,7 +7,7 @@ import "./InvitacionBoda.css";
 import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
-import woodlandSong from "../musica/woodland.mp3"; 
+import thyears from "../musica/thyears.mp3"; 
 export interface FamiliaMember {
   nombre: string;
   boletosAsignados: number;
@@ -30,13 +30,14 @@ export const familiaData: FamiliaMember[] = [
   { nombre: "REYNA VELA DIAZ", boletosAsignados: 3 },
   { nombre: "ANAHI SOSA VELA", boletosAsignados: 2 },
   { nombre: "VICENTE SOSA ORTEGA", boletosAsignados: 2 },
-  { nombre: "SELENE PEDRAZA VELA", boletosAsignados: 6 },
+  { nombre: "SELENE PEDRAZA SOSA", boletosAsignados: 6 },
   { nombre: "ARACELY LEON", boletosAsignados: 2 },
   { nombre: "ANTONIO PONCE LOPEZ", boletosAsignados: 1 },
   { nombre: "YADIRA HERNANDEZ", boletosAsignados: 1 },
   { nombre: "KAREN SALGADO", boletosAsignados: 2 },
-  { nombre: "Cori", boletosAsignados: 3 },
-  { nombre: "Ibeth Sosa Vela", boletosAsignados: 5 },
+  { nombre: "ANALLELY GUZMÁN CASTRO", boletosAsignados: 3 },
+    { nombre: "VALERIA LAPELUZ", boletosAsignados: 3 },
+  { nombre: "IBETH SOSA VELA", boletosAsignados: 5 },
 ];
 const InvitacionBoda: React.FC = () => {
   const toast = React.useRef<Toast>(null);
@@ -283,7 +284,7 @@ const InvitacionBoda: React.FC = () => {
                 <div className="detalles" style={{ marginBottom: "2rem" }}>
                   <p>Sábado, 13 de Septiembre 2025</p>
                   <p>Hora: 3:30 P.M</p>
-                  <p>Dirección:</p>
+                  <p>Lugar:</p>
                   <div className="flex align-items-center gap-2 mt-2 mb-4">
                     <i className="pi pi-map-marker text-primary"></i>
                     <a
@@ -293,8 +294,7 @@ const InvitacionBoda: React.FC = () => {
                       className="text-primary  font-medium mb-6"
                       style={{ margin: "0.5rem" }}
                     >
-                      Calle Valle de Bravo Manzana AT Lote 2,Lomas de
-                      Tecamac,55765.
+                    Salón La Lunita
                     </a>
                   </div>
                   <p>Código de vestimenta opcional -FIESTA MEXICANA-</p>
@@ -315,7 +315,7 @@ const InvitacionBoda: React.FC = () => {
                     onClick={restartSong} // Maneja el clic
                   />
                   <audio ref={audioRef}>
-                    <source src={woodlandSong} type="audio/mpeg" />
+                    <source src={thyears} type="audio/mpeg" />
                     Tu navegador no soporta el elemento de audio.
                   </audio>
                 </div>
