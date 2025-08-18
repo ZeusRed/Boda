@@ -27,7 +27,7 @@ export const familiaData: FamiliaMember[] = [
   { nombre: "MONICA LIMA VELA", boletosAsignados: 4 },
   { nombre: "ANTONIA VELA DIAZ", boletosAsignados: 5 },
   { nombre: "ENRIQUE ASENCION VELA", boletosAsignados: 4 },
-  { nombre: "REYNA VELA DIAZ", boletosAsignados: 3 },
+  { nombre: "REYNA VELA DIAZ", boletosAsignados: 2 },
   { nombre: "ANAHI SOSA VELA", boletosAsignados: 2 },
   { nombre: "VICENTE SOSA ORTEGA", boletosAsignados: 2 },
   { nombre: "SELENE PEDRAZA SOSA", boletosAsignados: 6 },
