@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import selloOro from "../assets/sello.png";
@@ -7,7 +7,7 @@ import "./InvitacionBoda.css";
 import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
-
+import woodlandSong from "../musica/woodland.mp3"; 
 export interface FamiliaMember {
   nombre: string;
   boletosAsignados: number;
@@ -40,10 +40,12 @@ export const familiaData: FamiliaMember[] = [
 ];
 const InvitacionBoda: React.FC = () => {
   const toast = React.useRef<Toast>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null); // ✅ tipado correcto
   const [abierta, setAbierta] = useState(false);
   const [modalConfirmar, setModalConfirmar] = useState(false);
   const [nombre, setNombre] = useState<string>("");
   const vigencia = new Date("2025-08-30"); // Fecha límite para confirmar asistencia
+  const [isPlaying, setIsPlaying] = useState(false);
   const [boletosOptions, setBoletosOptions] = useState<
     { label: string; value: number }[]
   >([]);
@@ -176,6 +178,34 @@ const InvitacionBoda: React.FC = () => {
       </Dialog>
     );
   };
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (audio){
+    if (audio.paused) {
+      audio.play();
+      setIsPlaying(true);
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
+    }
+  };
+  const restartSong = () => {
+    const audio = audioRef.current;
+    if (!audio) return; // Asegúrate de que el audio esté definido
+    audio.currentTime = 0; // Reinicia el tiempo de reproducción a 0
+    if (!isPlaying) {
+      audio.play(); // Si estaba en pausa, comienza a reproducir
+      setIsPlaying(true);
+    }
+  };
+  //play audio al abrir la invitación
+  useEffect(() => {
+    if (abierta && audioRef.current) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [abierta]);
   return (
     <>
       {modalConfirmar && modalConf()}
@@ -268,6 +298,26 @@ const InvitacionBoda: React.FC = () => {
                     </a>
                   </div>
                   <p>Código de vestimenta opcional -FIESTA MEXICANA-</p>
+                </div>
+                <div className="flex justify-content-center">
+                  <Button
+                    icon={isPlaying ? "pi pi-pause" : "pi pi-play"} // Cambia el ícono según el estado
+                    className="p-button-rounded p-button-success" // Estilo redondo
+                    style={{
+                      backgroundColor: "#2196F3",
+                      borderColor: "#2196F3",
+                    }}
+                    onClick={togglePlay} // Maneja el clic
+                  />
+                  <Button
+                    icon="pi pi-refresh" // Ícono de reiniciar
+                    className="p-button-rounded p-button-danger" // Estilo redondo y color rojo
+                    onClick={restartSong} // Maneja el clic
+                  />
+                  <audio ref={audioRef}>
+                    <source src={woodlandSong} type="audio/mpeg" />
+                    Tu navegador no soporta el elemento de audio.
+                  </audio>
                 </div>
                 <div className="flex justify-content-center">
                   <p>
