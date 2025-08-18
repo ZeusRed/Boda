@@ -4,15 +4,75 @@ import { Button } from "primereact/button";
 import selloOro from "../assets/sello.png";
 import floresBoda from "../assets/flores2.png";
 import "./InvitacionBoda.css";
-import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 
+export interface FamiliaMember {
+  nombre: string;
+  boletosAsignados: number;
+}
+
+export interface SeleccionState {
+  nombreSeleccionado: string | null;
+  boletosSeleccionados: number;
+  totalDisponible: number;
+}
+export const familiaData: FamiliaMember[] = [
+  { nombre: "EDITH VELA TORRES", boletosAsignados: 6 },
+  { nombre: "JOSE LUIS VELA TORRES", boletosAsignados: 3 },
+  { nombre: "PABLO LIMA", boletosAsignados: 4 },
+  { nombre: "YADIRA LIMA VELA", boletosAsignados: 4 },
+  { nombre: "VERO LIMA VELA", boletosAsignados: 2 },
+  { nombre: "MONICA LIMA VELA", boletosAsignados: 4 },
+  { nombre: "ANTONIA VELA DIAZ", boletosAsignados: 5 },
+  { nombre: "ENRIQUE ASENCION VELA", boletosAsignados: 4 },
+  { nombre: "REYNA VELA DIAZ", boletosAsignados: 3 },
+  { nombre: "ANAHI SOSA VELA", boletosAsignados: 2 },
+  { nombre: "VICENTE SOSA ORTEGA", boletosAsignados: 2 },
+  { nombre: "SELENE PEDRAZA VELA", boletosAsignados: 6 },
+  { nombre: "ARACELY LEON", boletosAsignados: 2 },
+  { nombre: "ANTONIO PONCE LOPEZ", boletosAsignados: 1 },
+  { nombre: "YADIRA HERNANDEZ", boletosAsignados: 1 },
+  { nombre: "KAREN SALGADO", boletosAsignados: 2 },
+  { nombre: "Cori", boletosAsignados: 3 },
+  { nombre: "Ibeth Sosa Vela", boletosAsignados: 5 },
+];
 const InvitacionBoda: React.FC = () => {
   const toast = React.useRef<Toast>(null);
   const [abierta, setAbierta] = useState(false);
   const [modalConfirmar, setModalConfirmar] = useState(false);
   const [nombre, setNombre] = useState<string>("");
+  const vigencia = new Date("2025-08-16"); // Fecha límite para confirmar asistencia
+  const [boletosOptions, setBoletosOptions] = useState<
+    { label: string; value: number }[]
+  >([]);
+  const [boletosSeleccionados, setBoletosSeleccionados] = useState<number>(0);
+
+  const nombresOptions = familiaData.map((miembro) => ({
+    label: `${miembro.nombre} (${miembro.boletosAsignados} disponibles)`,
+    value: miembro.nombre,
+    boletos: miembro.boletosAsignados,
+  }));
+
+  const handleNombreChange = (e: { value: string }) => {
+    const miembroSeleccionado = nombresOptions.find(
+      (opt) => opt.value === e.value
+    );
+    setNombre(e.value);
+
+    if (miembroSeleccionado) {
+      // Genera opciones desde 0 hasta el total de boletos asignados
+      const nuevasOpciones = Array.from(
+        { length: miembroSeleccionado.boletos + 1 },
+        (_, i) => ({ label: i.toString(), value: i })
+      );
+
+      setBoletosOptions(nuevasOpciones);
+      setBoletosSeleccionados(0); // Reinicia la selección
+    }
+  };
+
   const handleModalCondfirmar = () => {
     const phoneNumber = "525572754139"; //"5215951062215";
     if (toast.current) {
@@ -25,7 +85,8 @@ const InvitacionBoda: React.FC = () => {
       });
     }
     // Aquí podrías agregar la lógica para enviar un mensaje de WhatsApp
-    const whatsappMessage = `Asistencia Confirmada:\nNombre: ${nombre}\n\n¡Gracias por confirmar tu asistencia! Estamos emocionados de celebrar este día especial contigo.\n\nDetalles del evento:\nFecha: 13 de Septiembre 2025\nHora: 3:30 P.M\nDirección: Calle Valle de Bravo Manzana AT Lote 2, Lomas de Tecamac, 55765.(https://maps.app.goo.gl/7CEDDCMvFm3nfuY59)\n\n¡Nos vemos pronto!!!! \n\nSaludos,\nFanny & Reynaldo\n\n*Este mensaje es automático, por favor no respondas.
+    const whatsappMessage = `Asistencia Confirmada:\nNombre: ${nombre}
+    confirmaste ${boletosSeleccionados} boletos\n\n¡Gracias por confirmar tu asistencia! Estamos emocionados de celebrar este día especial contigo.\n\nDetalles del evento:\nFecha: 13 de Septiembre 2025\nHora: 3:30 P.M\nDirección: Calle Valle de Bravo Manzana AT Lote 2, Lomas de Tecamac, 55765.(https://maps.app.goo.gl/7CEDDCMvFm3nfuY59)\n\n¡Nos vemos pronto!!!! \n\nSaludos,\nFanny & Reynaldo\n\n*Este mensaje es automático, por favor no respondas.
     `;
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -49,38 +110,68 @@ const InvitacionBoda: React.FC = () => {
       <Dialog
         header="Confirmar Asistencia"
         visible={abierta}
-        style={{ width: "350px" }}
+        style={{ width: "400px" }} // Aumenté un poco el ancho
         modal
         onHide={() => setModalConfirmar(false)}
       >
-        <p>
-          Para confirmar su asistencia escribe su nombre para que podamos contar
-          con su asistencia.
-        </p>
-        <InputText
-          type="text"
-          placeholder="Tu nombre"
-          className="input-nombre"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          style={{ width: "100%" }}
-        />
-        <div
-          className="botones"
-          style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}
-        >
-          <Button
-            label="Confirmar"
-            icon="pi pi-check"
-            className="p-button-success"
-            onClick={handleModalCondfirmar}
-          />
-          <Button
-            label="Cancelar"
-            icon="pi pi-times"
-            className="p-button-secondary"
-            onClick={() => setModalConfirmar(false)}
-          />
+        <div className="flex flex-column gap-3">
+          <p>
+            Selecciona tu nombre y la cantidad de boletos para confirmar
+            asistencia.
+          </p>
+
+          <div className="p-field">
+            <label htmlFor="nombre">Nombre:</label>
+            <Dropdown
+              id="nombre"
+              value={nombre}
+              options={nombresOptions}
+              onChange={handleNombreChange}
+              placeholder="Selecciona tu nombre"
+              className="w-full"
+            />
+          </div>
+
+          {nombre && (
+            <div className="p-field">
+              <label htmlFor="boletos">Boletos a usar:</label>
+              <Dropdown
+                id="boletos"
+                value={boletosSeleccionados}
+                options={boletosOptions}
+                onChange={(e) => setBoletosSeleccionados(e.value)}
+                placeholder="Selecciona cantidad"
+                className="w-full"
+              />
+            </div>
+          )}
+
+          <div
+            className="flex justify-content-end gap-2"
+            style={{ marginTop: "1rem" }}
+          >
+            <Button
+              label="Cancelar"
+              icon="pi pi-times"
+              className="p-button-secondary"
+              onClick={() => setModalConfirmar(false)}
+            />
+            <Button
+              label="Confirmar"
+              icon="pi pi-check"
+              className="p-button-success"
+              onClick={handleModalCondfirmar}
+              disabled={!nombre || boletosSeleccionados === 0}
+              tooltip={
+                !nombre
+                  ? "Selecciona un nombre"
+                  : boletosSeleccionados === 0
+                  ? "Selecciona la cantidad de boletos"
+                  : ""
+              }
+              tooltipOptions={{ position: "top" }}
+            />
+          </div>
         </div>
       </Dialog>
     );
@@ -102,14 +193,16 @@ const InvitacionBoda: React.FC = () => {
               <img src={floresBoda} alt="Flores" />
             </div>
             <div className="info-novios">
-              <h2>Fanny  <p>&</p> Reynaldo</h2>
+              <h2>
+                Fanny <p>&</p> Reynaldo
+              </h2>
               <p>13 • 09 • 2025</p>
             </div>
           </Card>
         ) : (
           <Card className="carta-abierta-prime">
             <img
-src={floresBoda}
+              src={floresBoda}
               alt="Flores arriba derecha"
               className="flores-esquina arriba-derecha"
             />
@@ -118,64 +211,85 @@ src={floresBoda}
               alt="Flores abajo izquierda"
               className="flores-esquina abajo-izquierda"
             />
-
-            <div className="contenido-centro">
-              <h1>Fanny <p>&</p> Reynaldo</h1>
-              <p>Junto a nuestros padres</p>
-
-              <div style={{ display: "flex", flexWrap: "wrap" }}>
-                <div style={{ width: "50%", padding: "0 1px" }}>
-                  <h3>
-                    Reyna Vela 
-                    <br /> Vicente Sosa {" "}
-                  </h3>
-                </div>
-                <div style={{ width: "50%", padding: "0 1px" }}>
-                  <h3>
-                    {" "}
-                    Graciela Rivera <br /> Reynaldo Mejía {" "}
-                  </h3>
-                </div>
-              </div>
-
-              <p>Tenemos el honor de invitarles</p>
-              <p>a celebrar nuestra unión matrimonial civil</p>
-             
-              <div className="detalles" style={{ marginBottom: "2rem" }}>
-                <p>Sábado, 13 de Septiembre 2025</p>
-                <p>Hora: 3:30 P.M</p>
-                <p>Dirección:</p>
-                <div className="flex align-items-center gap-2 mt-2 mb-4">
-                  <i className="pi pi-map-marker text-primary"></i>
-                  <a
-                    href="https://maps.app.goo.gl/7CEDDCMvFm3nfuY59"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary  font-medium mb-6"
-                    style={{ margin: "0.5rem" }}
-                  >
-                    Calle Valle de Bravo Manzana AT Lote 2,Lomas de
-                    Tecamac,55765.
-                  </a>
-                </div>
-                  <p>Código de vestimenta opcional -FIESTA MEXICANA-</p>
-              </div>
-              <div className="flex justify-content-center">
+            {vigencia < new Date() ? (
+              <div className="mensaje-vigencia">
+                <h1>Confirmación Expirada!</h1>
+                <p>
+                  La fecha límite para confirmar asistencia ha pasado. Gracias
+                  por tu interés, te esperamos en la celebración de la Iglesia.
+                </p>
                 <Button
-                  label="Confirmar Asistencia"
-                  icon="pi pi-envelope"
-                  className="p-button-secondary p-button-raised p-5"
-                  style={{ marginBottom: "1rem" }}
-                  onClick={openModalConfirmar}
+                  label="Cerrar invitación"
+                  icon="pi pi-times"
+                  className="p-button-primary p-button-raised p-5 mt-5"
+                  onClick={() => setAbierta(false)}
                 />
               </div>
-              <Button
-                label="Cerrar invitación"
-                icon="pi pi-times"
-                className="p-button-primary p-button-raised p-5 mt-5"
-                onClick={() => setAbierta(false)}
-              />
-            </div>
+            ) : (
+              <div className="contenido-centro">
+                <h1>
+                  Fanny <p>&</p> Reynaldo
+                </h1>
+                <p>Junto a nuestros padres</p>
+
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  <div style={{ width: "50%", padding: "0 1px" }}>
+                    <h3>
+                      Reyna Vela
+                      <br /> Vicente Sosa{" "}
+                    </h3>
+                  </div>
+                  <div style={{ width: "50%", padding: "0 1px" }}>
+                    <h3>
+                      {" "}
+                      Graciela Rivera <br /> Reynaldo Mejía{" "}
+                    </h3>
+                  </div>
+                </div>
+
+                <p>Tenemos el honor de invitarles</p>
+                <p>a celebrar nuestra unión matrimonial civil</p>
+
+                <div className="detalles" style={{ marginBottom: "2rem" }}>
+                  <p>Sábado, 13 de Septiembre 2025</p>
+                  <p>Hora: 3:30 P.M</p>
+                  <p>Dirección:</p>
+                  <div className="flex align-items-center gap-2 mt-2 mb-4">
+                    <i className="pi pi-map-marker text-primary"></i>
+                    <a
+                      href="https://maps.app.goo.gl/7CEDDCMvFm3nfuY59"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary  font-medium mb-6"
+                      style={{ margin: "0.5rem" }}
+                    >
+                      Calle Valle de Bravo Manzana AT Lote 2,Lomas de
+                      Tecamac,55765.
+                    </a>
+                  </div>
+                  <p>Código de vestimenta opcional -FIESTA MEXICANA-</p>
+                </div>
+                <div className="flex justify-content-center">
+                  <p>
+                    Tienes hasta el 30 de agosto del 2025 para confirmar con tu
+                    asistencia.!!!!!
+                  </p>
+                  <Button
+                    label="Confirmar Asistencia"
+                    icon="pi pi-envelope"
+                    className="p-button-secondary p-button-raised p-5"
+                    style={{ marginBottom: "1rem" }}
+                    onClick={openModalConfirmar}
+                  />
+                </div>
+                <Button
+                  label="Cerrar invitación"
+                  icon="pi pi-times"
+                  className="p-button-primary p-button-raised p-5 mt-5"
+                  onClick={() => setAbierta(false)}
+                />
+              </div>
+            )}
           </Card>
         )}
       </div>
