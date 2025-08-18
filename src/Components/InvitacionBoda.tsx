@@ -14,7 +14,7 @@ const InvitacionBoda: React.FC = () => {
   const [modalConfirmar, setModalConfirmar] = useState(false);
   const [nombre, setNombre] = useState<string>("");
   const handleModalCondfirmar = () => {
-    const phoneNumber = "525572754139";//"5215951062215";
+    const phoneNumber = "525572754139"; //"5215951062215";
     if (toast.current) {
       toast.current.show({
         severity: "success",
@@ -102,14 +102,14 @@ const InvitacionBoda: React.FC = () => {
               <img src={floresBoda} alt="Flores" />
             </div>
             <div className="info-novios">
-              <h2>Fanny & Reynaldo</h2>
+              <h2>Fanny  <p>&</p> Reynaldo</h2>
               <p>13 • 09 • 2025</p>
             </div>
           </Card>
         ) : (
           <Card className="carta-abierta-prime">
             <img
-              src={floresBoda}
+src={floresBoda}
               alt="Flores arriba derecha"
               className="flores-esquina arriba-derecha"
             />
@@ -120,28 +120,30 @@ const InvitacionBoda: React.FC = () => {
             />
 
             <div className="contenido-centro">
-              <h1>Fanny & Reynaldo</h1>
-              <p>Junto a nuestras familias</p>
+              <h1>Fanny <p>&</p> Reynaldo</h1>
+              <p>Junto a nuestros padres</p>
 
               <div style={{ display: "flex", flexWrap: "wrap" }}>
                 <div style={{ width: "50%", padding: "0 1px" }}>
                   <h3>
-                    {" "}
-                    Graciela Rivera Lujano <br /> Reynaldo Mejía Cruz{" "}
+                    Reyna Vela 
+                    <br /> Vicente Sosa {" "}
                   </h3>
                 </div>
                 <div style={{ width: "50%", padding: "0 1px" }}>
                   <h3>
-                    Reyna Vela Diaz<br /> Vicente Sosa Ortega{" "}
+                    {" "}
+                    Graciela Rivera <br /> Reynaldo Mejía {" "}
                   </h3>
                 </div>
               </div>
 
               <p>Tenemos el honor de invitarles</p>
               <p>a celebrar nuestra unión matrimonial civil</p>
+             
               <div className="detalles" style={{ marginBottom: "2rem" }}>
                 <p>Sábado, 13 de Septiembre 2025</p>
-                <p>Hora: 4:00 P.M</p>
+                <p>Hora: 3:30 P.M</p>
                 <p>Dirección:</p>
                 <div className="flex align-items-center gap-2 mt-2 mb-4">
                   <i className="pi pi-map-marker text-primary"></i>
@@ -156,6 +158,7 @@ const InvitacionBoda: React.FC = () => {
                     Tecamac,55765.
                   </a>
                 </div>
+                  <p>Código de vestimenta opcional -FIESTA MEXICANA-</p>
               </div>
               <div className="flex justify-content-center">
                 <Button
