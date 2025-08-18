@@ -324,7 +324,7 @@ const InvitacionBoda: React.FC = () => {
                 </div>
                 <div className="flex justify-content-center">
                   <p>
-                    Tienes hasta el 30 de agosto del 2025 para confirmar con tu
+                    Tienes hasta el 31 de agosto del 2025 para confirmar con tu
                     asistencia.!!!!!
                   </p>
                   <Button
