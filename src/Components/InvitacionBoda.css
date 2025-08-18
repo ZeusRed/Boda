@@ -156,8 +156,8 @@
 }
 
 /* Texto carta abierta */
-.contenido-centro h1 {
-  font-family:'Parisienne',  cursive;
+.contenido-centro h1{
+  font-family:  cursive;
   font-size: 4rem;
   color: var(--color-dorado);
   margin-bottom: 1rem;
