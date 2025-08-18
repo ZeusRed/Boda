@@ -43,7 +43,7 @@ const InvitacionBoda: React.FC = () => {
   const [abierta, setAbierta] = useState(false);
   const [modalConfirmar, setModalConfirmar] = useState(false);
   const [nombre, setNombre] = useState<string>("");
-  const vigencia = new Date("2025-08-16"); // Fecha límite para confirmar asistencia
+  const vigencia = new Date("2025-08-30"); // Fecha límite para confirmar asistencia
   const [boletosOptions, setBoletosOptions] = useState<
     { label: string; value: number }[]
   >([]);
