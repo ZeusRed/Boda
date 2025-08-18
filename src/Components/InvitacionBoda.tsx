@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import selloOro from "../assets/sello.png";
@@ -7,7 +7,8 @@ import "./InvitacionBoda.css";
 import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
-import thyears from "../musica/thyears.mp3"; 
+// import thyears from "../musica/thyears.mp3";
+import thyears from "../musica/woodland.mp3"; // Asegúrate de que la ruta sea correcta
 export interface FamiliaMember {
   nombre: string;
   boletosAsignados: number;
@@ -19,25 +20,34 @@ export interface SeleccionState {
   totalDisponible: number;
 }
 export const familiaData: FamiliaMember[] = [
-  { nombre: "EDITH VELA TORRES", boletosAsignados: 6 },
-  { nombre: "JOSE LUIS VELA TORRES", boletosAsignados: 3 },
-  { nombre: "PABLO LIMA", boletosAsignados: 4 },
-  { nombre: "YADIRA LIMA VELA", boletosAsignados: 4 },
-  { nombre: "VERO LIMA VELA", boletosAsignados: 2 },
-  { nombre: "MONICA LIMA VELA", boletosAsignados: 4 },
-  { nombre: "ANTONIA VELA DIAZ", boletosAsignados: 5 },
-  { nombre: "ENRIQUE ASENCION VELA", boletosAsignados: 4 },
-  { nombre: "REYNA VELA DIAZ", boletosAsignados: 2 },
-  { nombre: "ANAHI SOSA VELA", boletosAsignados: 2 },
-  { nombre: "VICENTE SOSA ORTEGA", boletosAsignados: 2 },
-  { nombre: "SELENE PEDRAZA SOSA", boletosAsignados: 6 },
-  { nombre: "ARACELY LEON", boletosAsignados: 2 },
-  { nombre: "ANTONIO PONCE LOPEZ", boletosAsignados: 1 },
-  { nombre: "YADIRA HERNANDEZ", boletosAsignados: 1 },
-  { nombre: "KAREN SALGADO", boletosAsignados: 2 },
-  { nombre: "ANALLELY GUZMÁN CASTRO", boletosAsignados: 3 },
-    { nombre: "VALERIA LAPELUZ", boletosAsignados: 3 },
-  { nombre: "IBETH SOSA VELA", boletosAsignados: 5 },
+  // { nombre: "EDITH VELA TORRES", boletosAsignados: 6 },
+  // { nombre: "JOSE LUIS VELA TORRES", boletosAsignados: 3 },
+  // { nombre: "PABLO LIMA", boletosAsignados: 4 },
+  // { nombre: "YADIRA LIMA VELA", boletosAsignados: 4 },
+  // { nombre: "VERO LIMA VELA", boletosAsignados: 2 },
+  // { nombre: "MONICA LIMA VELA", boletosAsignados: 4 },
+  // { nombre: "ANTONIA VELA DIAZ", boletosAsignados: 5 },
+  // { nombre: "ENRIQUE ASENCION VELA", boletosAsignados: 4 },
+  // { nombre: "REYNA VELA DIAZ", boletosAsignados: 2 },
+  // { nombre: "ANAHI SOSA VELA", boletosAsignados: 2 },
+  // { nombre: "VICENTE SOSA ORTEGA", boletosAsignados: 2 },
+  // { nombre: "SELENE PEDRAZA SOSA", boletosAsignados: 6 },
+  // { nombre: "ARACELY LEON", boletosAsignados: 2 },
+  // { nombre: "ANTONIO PONCE LOPEZ", boletosAsignados: 1 },
+  // { nombre: "YADIRA HERNANDEZ", boletosAsignados: 1 },
+  // { nombre: "KAREN SALGADO", boletosAsignados: 2 },
+  // { nombre: "ANALLELY GUZMÁN CASTRO", boletosAsignados: 3 },
+  //   { nombre: "VALERIA LAPELUZ", boletosAsignados: 3 },
+  // { nombre: "IBETH SOSA VELA", boletosAsignados: 5 },
+  { nombre: "SIMON MUÑOZ", boletosAsignados: 1 },
+  { nombre: "JORGE MUÑOZ", boletosAsignados: 4 },
+  { nombre: "OSCAR SALAS", boletosAsignados: 2 },
+  { nombre: "MARTIN SALAS", boletosAsignados: 1 },
+  { nombre: "ISRA GARCIA", boletosAsignados: 1 },
+  { nombre: "CELINE GARCIA", boletosAsignados: 1 },
+  { nombre: "ALBERTO ROJAS", boletosAsignados: 3 },
+  { nombre: "YESSENIA CRUZ", boletosAsignados: 1 },
+  { nombre: "JONATHAN REYES", boletosAsignados: 1 },
 ];
 const InvitacionBoda: React.FC = () => {
   const toast = React.useRef<Toast>(null);
@@ -77,7 +87,7 @@ const InvitacionBoda: React.FC = () => {
   };
 
   const handleModalCondfirmar = () => {
-    const phoneNumber = "525572754139"; //"5215951062215";
+    const phoneNumber = "5215951062215"; //"525572754139"; 
     if (toast.current) {
       toast.current.show({
         severity: "success",
@@ -181,14 +191,14 @@ const InvitacionBoda: React.FC = () => {
   };
   const togglePlay = () => {
     const audio = audioRef.current;
-    if (audio){
-    if (audio.paused) {
-      audio.play();
-      setIsPlaying(true);
-    } else {
-      audio.pause();
-      setIsPlaying(false);
-    }
+    if (audio) {
+      if (audio.paused) {
+        audio.play();
+        setIsPlaying(true);
+      } else {
+        audio.pause();
+        setIsPlaying(false);
+      }
     }
   };
   const restartSong = () => {
@@ -202,7 +212,7 @@ const InvitacionBoda: React.FC = () => {
   };
   //play audio al abrir la invitación
   useEffect(() => {
-    if (abierta && audioRef.current &&vigencia >= new Date()) {
+    if (abierta && audioRef.current && vigencia >= new Date()) {
       audioRef.current.play();
       setIsPlaying(true);
     }
@@ -298,7 +308,6 @@ const InvitacionBoda: React.FC = () => {
                       Tecamac,55765. */}
                       Salón de fiestas la Lunita
                     </a>
-                  
                   </div>
                   <p>Código de vestimenta opcional -FIESTA MEXICANA-</p>
                 </div>
