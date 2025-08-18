@@ -294,8 +294,11 @@ const InvitacionBoda: React.FC = () => {
                       className="text-primary  font-medium mb-6"
                       style={{ margin: "0.5rem" }}
                     >
-                    Salón La Lunita
+                      {/* Calle Valle de Bravo Manzana AT Lote 2,Lomas de
+                      Tecamac,55765. */}
+                      Salón de fiestas la Lunita
                     </a>
+                  
                   </div>
                   <p>Código de vestimenta opcional -FIESTA MEXICANA-</p>
                 </div>
