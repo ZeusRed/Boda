@@ -87,7 +87,7 @@ const InvitacionBoda: React.FC = () => {
   };
 
   const handleModalCondfirmar = () => {
-    const phoneNumber = "5215951062215"; //"525572754139"; 
+    const phoneNumber = "525951062215"; //"525572754139"; 
     if (toast.current) {
       toast.current.show({
         severity: "success",
